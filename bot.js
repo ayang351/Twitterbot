@@ -34,6 +34,26 @@ function retweetLatest() {
 	});
 }
 
+// FUNCTION TO LIKE A POST
+var LikeHashtags = ['#GordonRamsay', '#HellsKitchen', '#MasterChef', '#food'];
+var value = Math.floor(Math.random() * LikeHashtags.length)
+
+var likes = {
+	q: LikeHashtags[value],
+	count: 5,
+	result_type: "recent"
+};
+
+T.get('search/tweets', likes,
+	function(err, data, response) {	
+		var likeId = data.statuses[0].id_str;
+		T.post('favorites/create',{id:likeId},
+		function(err, data, response) {
+			console.log("just liked a post")});
+	console.log(data);
+	}
+) 
+
 // Try to retweet something as soon as we run the program...
 retweetLatest();
 // ...and then every hour after that. Time here is in milliseconds, so
