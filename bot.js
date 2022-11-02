@@ -53,6 +53,32 @@ T.get('search/tweets', likes,
 	}
 ) 
 
+//this function randomly tweets a gordon ramsay quote (Hemadri's portion)
+var quotes = ["This lamb is so undercooked, it is following Mary to school",
+ "This crab is so undercooked I can still hear it singing Under the Sea",
+"I’ve never, ever, ever, ever, ever met someone I believe in as little as you.",
+"My gran could do better! And she’s dead!",
+"You don’t come into cooking to get rich.",
+"I wouldn’t trust you running a bath",
+"There’s enough garlic in here to kill every vampire in Europe",
+"Why did the chicken cross the road? Because you didn’t cook it!",
+"This fish is so raw, he’s still finding Nemo.",
+"Cooking is about passion, so it may look slightly temperamental in a way that it’s too assertive to the naked eye",
+"I think pressure’s healthy, and very few can handle it.",
+"Hey, panini head, are you even listening to me?",
+"This Pizza Is So Disgusting, If You take It To Italy, You'll Get Arrested.",
+"You're Cooking In A Burnt Pan, You Donkey!"]
+function tweetQuote() {
+	var randomNum = Math.floor(Math.random() * (quotes.length - 0) + 0);
+	console.log(randomNum);
+	T. post ('statuses/update', {status: `"${quotes[randomNum]}" - Gordon Ramsay`},
+	function(err, data, response) { 
+		console.log(data) 
+	} )
+}
+tweetQuote();
+setInterval(tweetQuote, 1000 * 60 * 60);
+
 // Try to retweet something as soon as we run the program...
 retweetLatest();
 // ...and then every hour after that. Time here is in milliseconds, so
