@@ -4,12 +4,11 @@ var Twit = require('twit');
 // We need to include our configuration file
 var T = new Twit(require('./config.js'));
 
-// This is the URL of a search for the latest tweets on the '#mediaarts' hashtag.
-var mediaArtsSearch = {q: "#mediaarts", count: 10, result_type: "recent"}; 
+// RETWEET FUNCTION TO RETWEET POST WITH #GordonRamsay
+var retweets = {q: "#GordonRamsay", count: 10, result_type: "recent"}; 
 
-// This function finds the latest tweet with the #mediaarts hashtag, and retweets it.
 function retweetLatest() {
-	T.get('search/tweets', mediaArtsSearch, function (error, data) {
+	T.get('search/tweets', retweets, function (error, data) {
 	  // log out any errors and responses
 	  console.log(error, data);
 	  // If our search request to the server had no errors...
