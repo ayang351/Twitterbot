@@ -80,7 +80,7 @@ tweetQuote();
 setInterval(tweetQuote, 1000 * 60 * 60);
 
 // post a random image (Hemadri) 
-var memes = ["meme1.jpeg", "meme2.png", "meme3.jpeg", "mem4.png","meme5.jpeg", "meme6.jpeg", "meme7,jpeg","meme8.jpeg", "meme9.jpeg"];
+var memes = ["meme1.jpeg", "meme2.png", "meme3.jpeg", "meme4.png","meme5.jpeg", "meme6.jpeg", "meme7,jpeg","meme8.jpeg", "meme9.jpeg"];
 function postMeme() {
 	var randomNum2 = Math.floor(Math.random() * (memes.length - 0) + 0);
 	console.log(randomNum2);
