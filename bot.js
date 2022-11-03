@@ -79,6 +79,35 @@ function tweetQuote() {
 tweetQuote();
 setInterval(tweetQuote, 1000 * 60 * 60);
 
+// post a random image (Hemadri) 
+var memes = ["meme1.jpeg", "meme2.png", "meme3.jpeg", "mem4.png","meme5.jpeg", "meme6.jpeg", "meme7,jpeg","meme8.jpeg", "meme9.jpeg"];
+function postMeme() {
+	var randomNum2 = Math.floor(Math.random() * (memes.length - 0) + 0);
+	console.log(randomNum2);
+	var config = require('./config')
+var fs = require('fs');
+var tt = new Twit(config);
+var b64content = fs.readFileSync(`./images/${memes[randomNum2]}`, {encoding: 'base64'})
+	tt.post('media/upload', {media_data: b64content}, function (err, data, response) {
+		console.log("Pic is posted");
+		var mediaIdStr = data.media_id_string;
+		var altText = `Gordon Meme ${randomNum2}`
+		var meta_params = {media_id: mediaIdStr, alt_text: {text: altText}}
+
+		tt.post('media/metadata/create', meta_params, function (err, data, response) {
+			if (!err) {
+				var params = {status: `random gordon meme:`, media_ids: [mediaIdStr]}
+				T.post('statuses/update', params, function (err, data, response) {
+					console.log(data)
+				})
+			}
+		})
+			
+		})
+	}
+postMeme();
+
+
 // Try to retweet something as soon as we run the program...
 retweetLatest();
 // ...and then every hour after that. Time here is in milliseconds, so
