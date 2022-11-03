@@ -71,7 +71,7 @@ var quotes = ["This lamb is so undercooked, it is following Mary to school",
 function tweetQuote() {
 	var randomNum = Math.floor(Math.random() * (quotes.length - 0) + 0);
 	console.log(randomNum);
-	T. post ('statuses/update', {status: `"${quotes[randomNum]}" - Gordon Ramsay`},
+	T. post ('statuses/update', {status: `${quotes[randomNum]}`},
 	function(err, data, response) { 
 		console.log(data) 
 	} )
