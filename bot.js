@@ -156,29 +156,40 @@ const reviews = ["I wouldn't even feed that to my dog", "I didn't know you can t
 "Salmonella is not an ingredient", "Is your mom upset with you ? What do you call that ?", "That looks disgusting",
 "IT'S RAWWW", "Oh for god's sake man!", "NO YOU DONUT!!"];
 
+// Initialize Array to check against double replying
+const replyArr = [];
+
 // Replies to mentions with a rating and review
 function foodRating() {
-	T.get('statuses/mentions_timeline', { count: 5, include_rts: 1}, gotData);
+	T.get('statuses/mentions_timeline', { count: 3, include_rts: 1}, gotData);
 	function gotData(err, data, response) {
-        var tweeter = data[0].user.screen_name;
-        var tweeterId = data[0]["id_str"];
-        var randomCombination = "@" + tweeter + " " + ratings[Math.floor(Math.random() * ratings.length)] + " " + reviews[Math.floor(Math.random() * reviews.length)];
-        console.log(tweeter);
-        console.log(tweeterId);
-        T.post('statuses/update', 
-        
-            { 
-            in_reply_to_status_id : tweeterId,
-            status: randomCombination,
-            auto_populate_reply_metadata: true },
-            
-            function(err, reply) {
-            if (err) {
-                console.log("something went wrong");
-            } else {
-                console.log("request complete");
+        for (i= 0; i < data.length; i++) {
+            var tweeter = data[i].user.screen_name;
+            var tweeterId = data[i]["id_str"];
+            var randomCombination = "@" + tweeter + " " + ratings[Math.floor(Math.random() * ratings.length)] + " " + reviews[Math.floor(Math.random() * reviews.length)];
+            for (j = 0; j < replyArr.length; j++) {
+                if (tweeterId == replyArr[j]) {
+                    return;
+                }
             }
-        })
+            replyArr.push(tweeterId);
+            console.log(tweeter);
+            console.log(tweeterId);
+            T.post('statuses/update', 
+            
+                { 
+                in_reply_to_status_id : tweeterId,
+                status: randomCombination,
+                auto_populate_reply_metadata: true },
+                
+                function(err, reply) {
+                if (err) {
+                    console.log("something went wrong");
+                } else {
+                    console.log("request complete");
+                }
+            })
+        }
         
     }
 }
@@ -193,4 +204,4 @@ setInterval(LikePost, 1000 * 60 * 10); // Likes a post every ten minutes
 setInterval(tweetQuote, 1000 * 60 * 60 * 24); // Tweets a quote every day
 setInterval(retweetLatest, 1000 * 60 * 60 * 4); // Retweets a #GordonRamsay post every four hours.
 setInterval(postMeme, 1000 * 60 * 60 * 24); // Posts a meme once a day
-setInterval(foodRating, 1000 * 60 * 30); // scans for a mention to reply to every thirty minutes.
+setInterval(foodRating, 1000 * 60 * 5); // scans for a mention to reply to every 5 minutes.
