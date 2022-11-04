@@ -132,3 +132,35 @@ function FollowBack() {
 //FollowBack function call
 FollowBack();
 setInterval(FollowBack, 1000 * 60 * 60);
+
+//FUNCTION TO RESPOND TO @MENTION WITH A FOOD RATING + REVIEW
+
+const ratings = ["-1000/10", "1/10", "0/10", "-99999/10", "2/10", "wtf/10", "-100/10", "-900/10"];
+const reviews = ["I wouldn't even feed that to my dog", "I didn't know you can tweet from prison",
+"My gran could do better! And she’s dead!", "You used so much oil, the U.S. want to invade the f—ing plate.",
+"Salmonella is not an ingredient", "Is your mom upset with you ? What do you call that ?", "That looks disgusting",
+"IT'S RAWWW", "Oh for god's sake man!", "NO YOU DONUT!!"];
+
+function foodRating() {
+	T.get('statuses/mentions_timeline', { count: 5, include_rts: 1}, gotData);
+	function gotData(err, data, response) {
+		for (var i = 0; i < data.length; i++) {
+			var tweeter = data[i].user.screen_name;
+			var randomCombination = ratings[Math.floor(Math.random() * ratings.length)] + " " + reviews[Math.floor(Math.random() * reviews.length)];
+			var replyText = {
+				status: '@' + tweeter + ' ' + randomCombination, 
+			}
+			T.post('statuses/update', replyText, function(err, reply) {
+				if (err) {
+					console.log("something went wrong");
+				} else {
+					console.log("request complete");
+				}
+			})
+			
+		}
+	} 
+}
+//foodRating function call 
+foodRating();
+setInterval(foodRating,  1000 * 60 * 60);
