@@ -31,7 +31,7 @@ function retweetLatest() {
 retweetLatest();
 setInterval(retweetLatest, 1000 * 60 * 60);
 
-var LikeHashtags = ['#GordonRamsay', '#HellsKitchen', '#MasterChef', '#food', '#GordonRamsayRestaurants'];
+var LikeHashtags = ['#GordonRamsay', '#HellsKitchen', '#MasterChef', '#GordonRamsayRestaurants'];
 // FUNCTION TO LIKE A POST
 function LikePost() {
 var value = Math.floor(Math.random() * LikeHashtags.length);
