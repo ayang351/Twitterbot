@@ -105,6 +105,20 @@ var b64content = fs.readFileSync(`./images/${memes[randomNum2]}`, {encoding: 'ba
 			
 		})
 	}
+
+//IN-PROGRESS --> FOLLOW BACK ALL @GORDANSEYRAM FOLLOWERS 
+var GordanSeyRamAccount = {
+	screen_name: 'GordanSeyRam'
+}
+T.get('followers/ids', GordanSeyRamAccount, gotData2);
+
+function gotData2(err, data, response) {
+	for (var i = 0; i < data.ids.length; i++) {
+		console.log(data.ids[i]);
+	}
+}
+
+
 postMeme();
 
 
