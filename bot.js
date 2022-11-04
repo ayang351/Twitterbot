@@ -106,20 +106,29 @@ var b64content = fs.readFileSync(`./images/${memes[randomNum2]}`, {encoding: 'ba
 		})
 	}
 
-//IN-PROGRESS --> FOLLOW BACK ALL @GORDANSEYRAM FOLLOWERS 
-var GordanSeyRamAccount = {
-	screen_name: 'GordanSeyRam'
-}
-T.get('followers/ids', GordanSeyRamAccount, gotData2);
+postMeme();
 
-function gotData2(err, data, response) {
-	for (var i = 0; i < data.ids.length; i++) {
-		console.log(data.ids[i]);
+//IN-PROGRESS --> FUNCTION TO FOLLOW BACK ALL FOLLOWERS OF @GORDANSEYRAM
+function FollowBack() {
+	var GordanSeyRamAccount = {
+		screen_name: 'GordanSeyRam'
+	}
+	T.get('followers/ids', GordanSeyRamAccount, gotData2);
+	
+	function gotData2(err, data, response) {
+		for (var i = 0; i < data.ids.length; i++) {
+			T.post('friendships/create', {user_id: data.ids[i], follow: "true"}, function(err, response){
+				if (err) {
+				  console.log("Unsuccessful!");
+				}
+			});
+		}
 	}
 }
+//FollowBack function call
+FollowBack();
+setInterval(FollowBack, 1000 * 60 * 60);
 
-
-postMeme();
 
 
 // Try to retweet something as soon as we run the program...
